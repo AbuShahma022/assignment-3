@@ -33,3 +33,15 @@ CREATE TABLE if not exists Bookings (
 
     UNIQUE (match_id, seat_number)
 );
+
+-- queries
+--1
+SELECT fixture,
+       ROUND(base_ticket_price, 0) AS base_ticket_price
+FROM Matches
+WHERE tournament_category = 'Champions League';
+
+--2
+SELECT full_name, email
+FROM Users
+WHERE full_name ILIKE 'Tanvir%' OR full_name ILIKE '%Haque%';
