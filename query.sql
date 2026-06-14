@@ -45,3 +45,32 @@ WHERE tournament_category = 'Champions League';
 SELECT full_name, email
 FROM Users
 WHERE full_name ILIKE 'Tanvir%' OR full_name ILIKE '%Haque%';
+
+--3
+SELECT booking_id,user_id,match_id , coalesce(payment_status,'Action Required')FROM bookings
+WHERE payment_status IS NULL;
+
+--4
+SELECT booking_id,full_name,fixture,ROUND(total_cost) AS total_cost FROM bookings
+INNER JOIN users ON bookings.user_id = users.user_id
+INNER JOIN matches ON bookings.match_id = matches.match_id;
+
+--5
+SELECT
+    users.user_id,
+    users.full_name,
+    bookings.booking_id
+FROM users
+FULL JOIN bookings
+ON users.user_id = bookings.user_id;
+
+
+--6
+SELECT booking_id,match_id, round(total_cost) as total_cost FROM bookings
+WHERE total_cost > (
+  SELECT AVG(total_cost) FROM bookings
+);
+
+--7
+SELECT match_id,fixture,round(base_ticket_price)as base_ticket_price FROM matches
+ORDER BY base_ticket_price DESC LIMIT 2 OFFSET 1
